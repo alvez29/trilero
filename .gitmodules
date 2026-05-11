@@ -1,0 +1,3 @@
+[submodule "godot-core"]
+	path = godot-core
+	url = https://github.com/alvez29/godot-core
