@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bo5sugg8f7uqk"]
+
+[ext_resource type="Shader" uid="uid://cd72dqytntyk3" path="res://assets/post_process/post-process.gdshader" id="1_d58na"]
+
+[resource]
+shader = ExtResource("1_d58na")
+shader_parameter/colors = 16.0
+shader_parameter/noise = 0.1
+shader_parameter/dither_strength = 2.0

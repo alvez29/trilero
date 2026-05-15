@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ckkbcltyqtluc"]
+
+[ext_resource type="Texture2D" uid="uid://b1pto1k5w2yqx" path="res://assets/cup/textures/cup_albedo.png" id="1_yf5rn"]
+[ext_resource type="Texture2D" uid="uid://dgug2comx0jcl" path="res://assets/cup/textures/cup_metalness.png" id="2_l48bq"]
+
+[resource]
+albedo_texture = ExtResource("1_yf5rn")
+metallic = 1.0
+metallic_texture = ExtResource("2_l48bq")

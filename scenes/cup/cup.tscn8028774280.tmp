@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://0dd5ovng7epo"]
+
+[ext_resource type="ArrayMesh" uid="uid://lh5y8qtmxe2r" path="res://assets/cup/cup.res" id="1_v8aan"]
+[ext_resource type="Script" uid="uid://dqky4eqh853nd" path="res://scenes/cup/cup.gd" id="1_yh1sb"]
+[ext_resource type="Material" uid="uid://ckkbcltyqtluc" path="res://assets/cup/cup.tres" id="2_yh1sb"]
+[ext_resource type="Script" uid="uid://ddtplykbrlyn6" path="res://godot-core/components/shaker_component/shaker_component.gd" id="4_by8ld"]
+[ext_resource type="Texture2D" uid="uid://by03gxs1s4awu" path="res://godot-core/textures/light_mask/Default/cone_composed_f.png" id="4_hqdqx"]
+[ext_resource type="Script" uid="uid://clymrdtl4hbas" path="res://godot-core/components/shaker_component/shake_profile.gd" id="5_c6ac2"]
+[ext_resource type="Texture2D" uid="uid://bh2nu2rygt27g" path="res://godot-core/textures/light_mask/Default/circle_a_noise.png" id="5_o6tqf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqoyy"]
+resource_local_to_scene = true
+transparency = 1
+blend_mode = 1
+cull_mode = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = ExtResource("4_hqdqx")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_c6ac2"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_oqoyy")
+size = Vector2(0.945, -1.665)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqdqx"]
+resource_local_to_scene = true
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("5_o6tqf")
+
+[sub_resource type="QuadMesh" id="QuadMesh_oqoyy"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_hqdqx")
+size = Vector2(0.5, 0.5)
+orientation = 1
+
+[sub_resource type="Animation" id="Animation_oqoyy"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_hqdqx"]
+resource_name = "unhover"
+length = 0.2
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oqoyy"]
+_data = {
+&"RESET": SubResource("Animation_oqoyy"),
+&"unhover": SubResource("Animation_hqdqx")
+}
+
+[sub_resource type="Resource" id="Resource_c6ac2"]
+script = ExtResource("5_c6ac2")
+frequency = 100.0
+smooth_start_end = true
+fade_duration = 0.1
+metadata/_custom_type_script = "uid://clymrdtl4hbas"
+
+[node name="CupScene" type="Node3D" unique_id=1625538573 node_paths=PackedStringArray("shaker_component")]
+script = ExtResource("1_yh1sb")
+shaker_component = NodePath("Components/ShakerComponent")
+
+[node name="CupMesh" type="MeshInstance3D" parent="." unique_id=309050801]
+unique_name_in_owner = true
+transform = Transform3D(0.7009093, -5.646507e-07, -0.7132504, -8.662515e-07, -1, -5.96047e-08, -0.7132504, 6.596317e-07, -0.7009093, 0, 0, 0)
+mesh = ExtResource("1_v8aan")
+surface_material_override/0 = ExtResource("2_yh1sb")
+
+[node name="Light" type="Node3D" parent="." unique_id=354286007]
+
+[node name="LightMaskCone" type="MeshInstance3D" parent="Light" unique_id=238110179]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2973709, 0)
+mesh = SubResource("QuadMesh_c6ac2")
+
+[node name="LightMaskCircle" type="MeshInstance3D" parent="Light" unique_id=763712511]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1286186, 0)
+mesh = SubResource("QuadMesh_oqoyy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=792379557]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_oqoyy")
+
+[node name="Components" type="Node" parent="." unique_id=1953219394]
+
+[node name="ShakerComponent" type="Node" parent="Components" unique_id=1932113681 node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_by8ld")
+target_node = NodePath("../../CupMesh")
+default_profile = SubResource("Resource_c6ac2")

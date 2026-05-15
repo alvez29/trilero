@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://bs3ghbuqu2k6i"]
+
+[ext_resource type="Material" uid="uid://b0a2oh760nw03" path="res://godot-core/assets/shaders/sokpop_like/sokpop_sky/sokpop_sky.tres" id="1_fydms"]
+[ext_resource type="PackedScene" uid="uid://0dd5ovng7epo" path="res://scenes/cup/cup.tscn" id="2_ch4wc"]
+[ext_resource type="PackedScene" uid="uid://bk7uw3mebrfnr" path="res://scenes/ball/ball.tscn" id="2_w0va0"]
+[ext_resource type="Script" uid="uid://bdbj40k0jm4h4" path="res://scenes/cup_manager.gd" id="3_6kcc8"]
+[ext_resource type="Script" uid="uid://bkijt7538amov" path="res://components/game_manager.gd" id="4_ch4wc"]
+
+[sub_resource type="Sky" id="Sky_tyhie"]
+sky_material = ExtResource("1_fydms")
+radiance_size = 2
+
+[sub_resource type="Environment" id="Environment_f8w8m"]
+background_mode = 1
+background_energy_multiplier = 0.1
+background_intensity = 100000.0
+sky = SubResource("Sky_tyhie")
+tonemap_mode = 3
+tonemap_white = 8.0
+ssao_enabled = true
+ssao_detail = 2.0
+sdfgi_enabled = true
+sdfgi_bounce_feedback = 0.9
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.2
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.7
+volumetric_fog_density = 0.01
+volumetric_fog_gi_inject = 1.14
+volumetric_fog_anisotropy = 0.7
+volumetric_fog_sky_affect = 0.295
+adjustment_saturation = 1.17
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qo5hu"]
+exposure_multiplier = 3.069
+auto_exposure_scale = 0.22
+auto_exposure_speed = 0.8
+dof_blur_far_distance = 1.44
+dof_blur_near_distance = 0.01
+auto_exposure_min_sensitivity = 8.01
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w0va0"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="MainScene" type="Node3D" unique_id=1879380082]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=349293275]
+transform = Transform3D(0.9999783, -0.005835982, 0.0030569164, 0.004986811, 0.973727, 0.22766414, -0.004305245, -0.22764392, 0.9737349, 0, 0.48740786, 0)
+fov = 60.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=751127687]
+environment = SubResource("Environment_f8w8m")
+camera_attributes = SubResource("CameraAttributesPractical_qo5hu")
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="WorldEnvironment" unique_id=993397437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.8991, 25.834, -30.0061)
+size = Vector3(10000, 10000, 1000)
+
+[node name="GameTable" type="Node3D" parent="." unique_id=1846624137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.76242626)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="GameTable" unique_id=781057155]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.2156688, 0)
+distance_fade_enabled = true
+omni_range = 1.5608819
+
+[node name="CupPositions" type="Node3D" parent="GameTable" unique_id=800878518]
+
+[node name="LeftMarker" type="Marker3D" parent="GameTable/CupPositions" unique_id=425341594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+
+[node name="LeftArea" type="Area3D" parent="GameTable/CupPositions/LeftMarker" unique_id=1285568075]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameTable/CupPositions/LeftMarker/LeftArea" unique_id=105610861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_w0va0")
+
+[node name="MiddleMarker" type="Marker3D" parent="GameTable/CupPositions" unique_id=1871737460]
+
+[node name="MiddleArea" type="Area3D" parent="GameTable/CupPositions/MiddleMarker" unique_id=307186136]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameTable/CupPositions/MiddleMarker/MiddleArea" unique_id=546629641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_w0va0")
+
+[node name="RightMarker" type="Marker3D" parent="GameTable/CupPositions" unique_id=871921421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+
+[node name="RightArea" type="Area3D" parent="GameTable/CupPositions/RightMarker" unique_id=1999363395]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameTable/CupPositions/RightMarker/RightArea" unique_id=89064517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_w0va0")
+
+[node name="Cup1" parent="GameTable" unique_id=309050801 instance=ExtResource("2_ch4wc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128, 0)
+light_on_energy = 10.0
+id = 1
+
+[node name="Cup2" parent="GameTable" unique_id=759593600 instance=ExtResource("2_ch4wc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.128, 0)
+light_on_energy = 10.0
+id = 2
+
+[node name="Cup3" parent="GameTable" unique_id=28208069 instance=ExtResource("2_ch4wc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.128, 0)
+light_on_energy = 10.0
+id = 3
+
+[node name="Ball" parent="GameTable" unique_id=1303740346 instance=ExtResource("2_w0va0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28469548, -0.019025207)
+
+[node name="Components" type="Node" parent="." unique_id=535615392]
+
+[node name="CupsManager" type="Node" parent="Components" unique_id=1314481294 node_paths=PackedStringArray("slots", "cups")]
+script = ExtResource("3_6kcc8")
+slots = [NodePath("../../GameTable/CupPositions/LeftMarker/LeftArea"), NodePath("../../GameTable/CupPositions/MiddleMarker/MiddleArea"), NodePath("../../GameTable/CupPositions/RightMarker/RightArea")]
+cups = [NodePath("../../GameTable/Cup1"), NodePath("../../GameTable/Cup2"), NodePath("../../GameTable/Cup3")]
+
+[node name="TrileroGameManager" type="Node" parent="Components" unique_id=53248386 node_paths=PackedStringArray("cup_manager")]
+script = ExtResource("4_ch4wc")
+cup_manager = NodePath("../CupsManager")

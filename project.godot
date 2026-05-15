@@ -11,8 +11,40 @@ config_version=5
 [application]
 
 config/name="Trilero"
+run/main_scene="uid://b4v6raj3dxmyn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+HitStopManager="*uid://d0fxmrgk71cdh"
+PlayerController="*uid://d4dv7c6qcv6mu"
+SceneLoader="*uid://bg1nof8q4arpr"
+SettingsManager="*uid://cu3byu20p6ldj"
+Utils="*uid://byiqxg54ujptn"
+UIState="*uid://ccxh03gu8isie"
+
+[debug_draw_3d]
+
+settings/addon_root_folder="res://addons/debug_draw_3d"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="viewport"
+window/stretch/scale=0.5
+window/stretch/scale_mode="integer"
+
+[file_customization]
+
+folder_colors={
+"res://godot-core/": "red"
+}
+
+[layer_names]
+
+3d_physics/layer_1="Cup"
 
 [physics]
 

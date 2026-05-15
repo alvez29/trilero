@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://bk7uw3mebrfnr"]
+
+[ext_resource type="Material" uid="uid://yei046m1f8yd" path="res://godot-core/assets/shaders/sokpop_like/sokpop_wobble_3d/sokpop_wobble.tres" id="1_oqv3d"]
+[ext_resource type="Texture2D" uid="uid://bxg6bv8rr0a3y" path="res://godot-core/textures/light_mask/Default/cone_composed_a.png" id="2_jbgth"]
+[ext_resource type="Texture2D" uid="uid://d4dw14amw4a7o" path="res://godot-core/textures/light_mask/Default/shape_a.png" id="2_xotqv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ch4wc"]
+material = ExtResource("1_oqv3d")
+radius = 0.025
+height = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xotqv"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = ExtResource("2_jbgth")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_xotqv"]
+material = SubResource("StandardMaterial3D_xotqv")
+size = Vector2(0.14, 0.14)
+center_offset = Vector3(0, 0.05, 0)
+
+[sub_resource type="Curve" id="Curve_jbgth"]
+_data = [Vector2(0.008460239, 0), 0.0, 0.0, 0, 0, Vector2(0.3536379, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_yjhvv"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.35532993, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_a81tc"]
+_limits = [0.0, 2.0325463, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.27918783, 2.0325463), 0.0, 0.0, 0, 0, Vector2(0.38409474, 2.0325463), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqv3d"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = ExtResource("2_xotqv")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_oqv3d"]
+material = SubResource("StandardMaterial3D_oqv3d")
+size = Vector2(0.3, 0.3)
+
+[node name="Ball" type="Node3D" unique_id=422448723]
+
+[node name="BallMesh" type="MeshInstance3D" parent="." unique_id=1303740346]
+mesh = SubResource("SphereMesh_ch4wc")
+
+[node name="LightParticles" type="CPUParticles3D" parent="BallMesh" unique_id=1531706939]
+amount = 20
+lifetime = 0.7
+randomness = 0.42
+local_coords = true
+mesh = SubResource("QuadMesh_xotqv")
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+direction = Vector3(1, 1, 1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+angular_velocity_max = 0.2
+angle_max = 360.0
+scale_amount_min = 0.2
+scale_amount_max = 0.6
+scale_amount_curve = SubResource("Curve_jbgth")
+split_scale = true
+scale_curve_x = SubResource("Curve_yjhvv")
+scale_curve_y = SubResource("Curve_a81tc")
+scale_curve_z = null
+
+[node name="LightBackground" type="MeshInstance3D" parent="BallMesh" unique_id=639519760]
+transform = Transform3D(1.0000007, 0, 0, 0, 0.9999974, 0, 0, 0, 0.99999964, 0, 0, 0)
+mesh = SubResource("QuadMesh_oqv3d")
+
+[node name="Light" type="OmniLight3D" parent="BallMesh" unique_id=894750348]
+light_color = Color(1, 1, 0, 1)
+light_energy = 1.582
+light_indirect_energy = 1.105
+light_volumetric_fog_energy = 4.922
+omni_range = 0.6527047

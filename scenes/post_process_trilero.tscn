@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://b4v6raj3dxmyn"]
+
+[ext_resource type="Shader" uid="uid://cd72dqytntyk3" path="res://assets/post_process/post-process.gdshader" id="1_c4bhf"]
+[ext_resource type="PackedScene" uid="uid://bs3ghbuqu2k6i" path="res://scenes/trilero.tscn" id="1_grmel"]
+[ext_resource type="Script" uid="uid://4800pbcxagmh" path="res://components/cup_selection_behavior.gd" id="2_dxek7"]
+[ext_resource type="Script" uid="uid://kuluqxxkg746" path="res://scenes/click_area/click_area.gd" id="2_rh4pc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c4bhf"]
+shader = ExtResource("1_c4bhf")
+shader_parameter/colors = 16.0
+shader_parameter/noise = 0.0
+shader_parameter/dither_strength = 1.0
+
+[sub_resource type="Theme" id="Theme_grmel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dxek7"]
+
+[node name="PostProcessTrilero" type="Control" unique_id=1459404885]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1297066140]
+material = SubResource("ShaderMaterial_c4bhf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1428161742]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="MainScene" parent="SubViewportContainer/SubViewport" unique_id=1879380082 instance=ExtResource("1_grmel")]
+
+[node name="Ball" parent="SubViewportContainer/SubViewport/MainScene/GameTable" parent_id_path=PackedInt32Array(1879380082, 1846624137) index="5" unique_id=1303740346]
+visible = false
+
+[node name="CupsManager" parent="SubViewportContainer/SubViewport/MainScene/Components" parent_id_path=PackedInt32Array(1879380082, 535615392) index="0" unique_id=1314481294 node_paths=PackedStringArray("hud_selection_component", "cups")]
+hud_selection_component = NodePath("../../../../../Components/CupSelectionComponent")
+cups = [NodePath("../../GameTable/Cup3"), NodePath("../../GameTable/Cup1"), NodePath("../../GameTable/Cup2")]
+
+[node name="TrileroGameManager" parent="SubViewportContainer/SubViewport/MainScene/Components" parent_id_path=PackedInt32Array(1879380082, 535615392) index="1" unique_id=53248386 node_paths=PackedStringArray("hud")]
+hud = NodePath("../../../../../HUD")
+
+[node name="HUD" type="Control" parent="." unique_id=864566765]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="CupButtons" type="HBoxContainer" parent="." unique_id=1812105882]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 217.0
+offset_top = 539.0
+offset_right = -183.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftCupSelectArea" type="Panel" parent="CupButtons" unique_id=1267392249]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_grmel")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dxek7")
+script = ExtResource("2_rh4pc")
+
+[node name="MiddleCupSelectArea" type="Panel" parent="CupButtons" unique_id=93972296]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_grmel")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dxek7")
+script = ExtResource("2_rh4pc")
+
+[node name="RightCupSelectArea" type="Panel" parent="CupButtons" unique_id=1942768045]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_grmel")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dxek7")
+script = ExtResource("2_rh4pc")
+
+[node name="Components" type="Node" parent="." unique_id=1744006878]
+
+[node name="CupSelectionComponent" type="Node" parent="Components" unique_id=1419722233 node_paths=PackedStringArray("selection_areas")]
+script = ExtResource("2_dxek7")
+selection_areas = [NodePath("../../CupButtons/LeftCupSelectArea"), NodePath("../../CupButtons/MiddleCupSelectArea"), NodePath("../../CupButtons/RightCupSelectArea")]
+
+[editable path="SubViewportContainer/SubViewport/MainScene"]
